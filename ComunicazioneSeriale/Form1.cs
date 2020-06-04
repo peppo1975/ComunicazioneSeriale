@@ -111,6 +111,7 @@ namespace ComunicazioneSeriale
                 //chiude la comunicazione
                 aperta_comunicazione = false;
                 serialPort1.Close();
+                serialPort2.Close();
                 button1.Text = "APRI COMUNICAZIONE";
                 textBox1.BackColor = Color.Yellow;
 
@@ -120,9 +121,11 @@ namespace ComunicazioneSeriale
                 aperta_comunicazione = true;
                 //apre la comunicazione
                 serialPort1.PortName = port_IN;
+                serialPort2.PortName = port_OUT;
                 //SerialPort serialPort1 = new SerialPort(port_IN);
                 serialPort1.DataReceived += new SerialDataReceivedEventHandler(MyDataReceivedHandler);
                 serialPort1.Open();
+                serialPort2.Open();
                 button1.Text = "CHIUDI COMUNICAZIONE";
                 textBox1.BackColor = Color.GreenYellow;
             }
@@ -143,7 +146,7 @@ namespace ComunicazioneSeriale
             if (str.Contains("\r\n"))
             {
                 AddListBoxItem(str);
-
+                serialPort2.Write(str);
                 str = "";
             }
             
