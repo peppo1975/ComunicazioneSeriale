@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.IO;
 
 namespace ComunicazioneSeriale
 { 
@@ -27,6 +28,9 @@ namespace ComunicazioneSeriale
         Comunicazione comunicazione = new Comunicazione();
 
         string str = "";
+        string now = "";
+
+        //StreamWriter sw;
 
         public Form1()
         {
@@ -35,6 +39,31 @@ namespace ComunicazioneSeriale
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            DateTime thisDay = DateTime.Today;
+
+
+             now = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss") + ".txt";
+
+            //MessageBox.Show(now);
+
+            string[] lines = { "First line", "Second line", "Third line" };
+
+            // Set a variable to the Documents path.
+            string docPath =
+              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            //outputFile = new StreamWriter(Path.Combine(docPath, now));
+            //sw = File.AppendText(Path.Combine(docPath, now));
+
+            // Write the string array to a new file named "WriteLines.txt".
+            //using ( outputFile = new StreamWriter(Path.Combine(docPath, now)))
+            //{
+            //    foreach (string line in lines)
+            //        outputFile.WriteLine(line);
+            //}
+
+
+
 
             ports = SerialPort.GetPortNames();
 
@@ -145,9 +174,18 @@ namespace ComunicazioneSeriale
 
             if (str.Contains("\r\n"))
             {
+                using (StreamWriter sw = File.AppendText(now))
+                {
+            
+                    sw.WriteLine(DateTime.Now.ToString() + " → " + str);
+                }
                 AddListBoxItem(str);
                 serialPort2.Write(str);
+
+                serialPort1.Write("6\r\n");
+
                 str = "";
+              
             }
             
         }
@@ -167,6 +205,8 @@ namespace ComunicazioneSeriale
                 // This is the UI thread so perform the task.
                 //this.listBox3.Items.Add(item);
                 this.listBox3.Items.Insert(0, item);
+                //outputFile.WriteLine("fenguk");
+
             }
         }
 
@@ -179,6 +219,11 @@ namespace ComunicazioneSeriale
         private void button2_Click(object sender, EventArgs e)
         {
             listBox3.Items.Clear();
+        }
+
+        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

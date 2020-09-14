@@ -42,6 +42,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // serialPort1
+            // 
+            this.serialPort1.BaudRate = 19200;
+            // 
+            // serialPort2
+            // 
+            this.serialPort2.BaudRate = 19200;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -96,6 +104,7 @@
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(451, 381);
             this.listBox3.TabIndex = 7;
+            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
             // 
             // button2
             // 
